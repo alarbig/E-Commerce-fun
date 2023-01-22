@@ -5,41 +5,30 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', async (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
   try {
     const getAllProducts = await Product.findAll({
-      attributes: ['id', 'product_name', 'price', 'stock'],
-    include: [
-      {
-        model: Category, 
-        attributes: ['category_name']
+      attributes: [
+        'id', 'product_name', 'price', 'stock'
+      ], 
+      include:[{
+        model:Category, 
+        attributes:['category_name']
       }, 
-      {
-        model:Tag, 
-        attributes: ['tag_name']
-      }
-    ]
-    })
-    
-  // Product.findAll({
-  //   attributes: ['id', 'product_name', 'price', 'stock'],
-  //   include: [
-  //     {
-  //       model: Category, 
-  //       attributes: ['category_name']
-  //     }, 
-  //     {
-  //       model:Tag, 
-  //       attributes: ['tag_name']
-  //     }
-  //   ]
-  // }).then(getAllProducts => {
-  //   res.json(getAllProducts)
-  // }).catch (err => {
-  //   res.status(500).json(err);
-  // })
-  }})
+    {
+      model: Tag, 
+      attributes:['tag_name']
+    }]
+    }) 
+    if(!getAllProducts){
+      res.status(404).json({ message: 'No product with this id!'})
+      return
+    }
+    res.status(200).json(getAllProducts)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+  
 
 // get one product
 router.get('/:id', async (req, res) => {
