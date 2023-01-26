@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
       model: Tag, 
       attributes:['tag_name']
     }]
-    }) 
+    })
     if(!getAllProducts){
       res.status(404).json({ message: 'No product with this id!'})
       return
@@ -132,19 +132,23 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',  (req, res) => {
   // delete one product by its `id` value
-  try {
-    const productDestroy = await Product.destroy({
-      where: {
-        id: req.params.id
-      }
-
-    })
-    res.status(200).json(productDestroy)
-  } catch (err) {
-    res.status(500).json(err)
-  }
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(deleteProduct => {
+    if (!deleteProduct) {
+      res.status(404).json({message: 'An error occurred'});
+      return;
+    }
+    res.json(deleteProduct);
+  })
+  .catch(err =>{
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;
