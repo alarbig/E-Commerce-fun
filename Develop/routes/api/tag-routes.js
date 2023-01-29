@@ -74,17 +74,12 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(deleteTag => {
-    if (!deleteTag) {
-      res.status(404).json({message: 'An error occurred'});
-      return;
-    }
-    res.json(deleteTag);
   })
-  .catch(err =>{
+    res.status(200).json(deleteTag);
+  }).catch(err =>{
     console.log(err);
     res.status(500).json(err);
   });
-});
+;
 
 module.exports = router;

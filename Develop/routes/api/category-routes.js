@@ -77,16 +77,11 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(categoryDelete => {
-    if (!categoryDelete) {
-      res.status(404).json({message: 'An error occurred'});
-      return;
-    }
-    res.json(categoryDelete);
+  })
+  res.status(200).json(categoryDelete);
   }).catch(err =>{
     console.log(err);
     res.status(500).json(err);
   });
-});
 
 module.exports = router;

@@ -138,17 +138,13 @@ router.delete('/:id',  (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(deleteProduct => {
-    if (!deleteProduct) {
-      res.status(404).json({message: 'An error occurred'});
-      return;
-    }
-    res.json(deleteProduct);
+  })
+  res.status(200).json(deleteProduct);
   })
   .catch(err =>{
     console.log(err);
     res.status(500).json(err);
   });
-});
+
 
 module.exports = router;
