@@ -33,9 +33,8 @@ router.get('/:id', async (req, res) => {
       where: {
         id: req.params.id
       },
-      include:[{
-        model:Product, 
-        attributes:['id', 'category_id', 'product_name', 'price', 'stock']
+      include:[{ model:Product, 
+          attributes:['id', 'category_id', 'product_name', 'price', 'stock']
       }]
     })
     res.status(200).json(findOneCategory)
@@ -84,8 +83,7 @@ router.delete('/:id', (req, res) => {
       return;
     }
     res.json(categoryDelete);
-  })
-  .catch(err =>{
+  }).catch(err =>{
     console.log(err);
     res.status(500).json(err);
   });
